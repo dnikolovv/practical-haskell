@@ -14,7 +14,7 @@ Practical Haskell is an initiative to contain as many of these "practical bits" 
 
 First of all, an important note:
 
-Examples are aimed towards **everyone** in the community, regardless of their level of experience or understanding.
+Bits are aimed towards **everyone** in the community, regardless of their level of experience or understanding.
 
 > No example is too trivial!
 
@@ -36,6 +36,7 @@ A Practical Haskell bit is a **mini-project** that:
 * Reflects the current (or at least some) best practices
 * Is suitable for refreshing your memory or just copy-pasting
 * Has a sufficient, but not necessarily detailed explanation
+* Aims to use terminology and 
 
 A Practical Haskell bit is **not**:
 

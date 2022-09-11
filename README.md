@@ -56,6 +56,10 @@ Some people will struggle with "basic" things such as parsing JSON or setting up
 * Property testing with `QuickCheck`
 * etc.
 
+One might argue that for examples using specific libraries, we should just focus on updating the documentation. I support that 100%, but there are multiple points of view.
+
+Better documentation only helps only if you're **already aware** of the library in question. Someone that hasn't heard about `QuickCheck` might find an example intriguing and end up using it down the line.
+
 #### Bad Practical Haskell Bit candidates:
 
 * A CRUD app

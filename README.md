@@ -58,7 +58,9 @@ Some people will struggle with "basic" things such as parsing JSON or setting up
 
 One might argue that for examples using specific libraries, we should just focus on updating the documentation. I support that 100%, but there are multiple points of view.
 
-Better documentation only helps only if you're **already aware** of the library in question. Someone that hasn't heard about `QuickCheck` might find an example intriguing and end up using it down the line.
+Better documentation only helps only if you're **already aware** of the library in question.
+
+It's easy to underestimate how many people haven't heard about `QuickCheck`, `katip` or even `servant`. Containing and organizing all examples in a single repository makes them "contagious". You come for 1 thing, but find out a few others.
 
 #### Bad Practical Haskell Bit candidates:
 

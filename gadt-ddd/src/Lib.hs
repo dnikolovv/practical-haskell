@@ -1,6 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE KindSignatures #-}
+{-# LANGUAGE RankNTypes #-}
 
 module Lib where
 
@@ -41,6 +42,8 @@ data Order (status :: OrderStatus) where
   OutstandingOrder :: OrderData -> Order 'Outstanding
   PaidOrder :: OrderData -> ShipmentInfo -> Order 'PaidFor
 
+data SomeOrder = forall status. SomeOrder (Order status)
+
 -- We can now specify a status where others don't make sense
 markAsPaid :: Order 'Outstanding -> m ()
 markAsPaid = undefined
@@ -60,5 +63,5 @@ markAsShipped (PaidOrder orderData shipmentInfo) = do
   undefined
 
 -- If you don't care about the order type, just don't specify a status
-queryOrders :: m [Order any]
+queryOrders :: m [SomeOrder]
 queryOrders = undefined

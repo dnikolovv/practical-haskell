@@ -23,13 +23,17 @@ module API.WithAuth
   )
 where
 
+import Control.Arrow (first)
 import Crypto.JWT (emptyClaimsSet, unregisteredClaims)
 import Data.Aeson (FromJSON, Result (..), ToJSON (toJSON), Value (Object), fromJSON)
+import Data.Aeson.Key (fromText, toText)
+import Data.Aeson.KeyMap qualified as KeyMap
 import Data.Coerce (coerce)
 import Data.Text (Text)
-import qualified Data.Text as T
+import Data.Text qualified as T
 import GHC.Generics (Generic)
 import Lens.Micro (set, to, (^.))
+import RIO.Map qualified as Map
 import Servant.Auth.JWT
 
 data UserType
@@ -50,12 +54,29 @@ data AnyAPIUser = forall ut. AnyAPIUser (APIUser ut)
 instance ToJWT AnyAPIUser where
   encodeJWT (AnyAPIUser user) = do
     case toJSON (userData user) of
-      (Object userAsHashmap) -> set unregisteredClaims userAsHashmap emptyClaimsSet
+      (Object userAsMap) ->
+        set
+          unregisteredClaims
+          ( Map.fromList
+              . map (first toText)
+              . KeyMap.toList
+              $ userAsMap
+          )
+          emptyClaimsSet
       _ -> emptyClaimsSet
 
 instance FromJWT AnyAPIUser where
   decodeJWT m =
-    case fromJSON (m ^. unregisteredClaims . to Object) of
+    case fromJSON
+      ( m
+          ^. unregisteredClaims
+          . to
+            ( Object
+                . KeyMap.fromList
+                . map (first fromText)
+                . Map.toList
+            )
+      ) of
       Success ud@UserData {..} -> case userType of
         AdminUserType -> Right . AnyAPIUser $ AdminUser ud
         RegularUserType -> Right . AnyAPIUser $ RegularUser ud

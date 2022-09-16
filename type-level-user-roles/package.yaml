@@ -34,6 +34,9 @@ dependencies:
   - mtl
   - rio
 
+default-extensions:
+  - ImportQualifiedPost
+
 ghc-options:
   - -Wall
   - -Wcompat
